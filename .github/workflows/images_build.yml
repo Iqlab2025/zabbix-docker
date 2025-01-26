@@ -286,7 +286,7 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@53851d14592bedcffcf25ea515637cff71ef929a # v3.3.0
         with:
-          image: tonistiigi/binfmt:desktop-master
+          image: tonistiigi/binfmt:qemu-v8.1.5
           platforms: all
 
       - name: Set up Docker Buildx
@@ -511,7 +511,7 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@53851d14592bedcffcf25ea515637cff71ef929a # v3.3.0
         with:
-          image: tonistiigi/binfmt:desktop-master
+          image: tonistiigi/binfmt:qemu-v8.1.5
           platforms: all
 
       - name: Set up Docker Buildx
@@ -872,7 +872,7 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@53851d14592bedcffcf25ea515637cff71ef929a # v3.3.0
         with:
-          image: tonistiigi/binfmt:desktop-master
+          image: tonistiigi/binfmt:qemu-v8.1.5
           platforms: all
 
       - name: Set up Docker Buildx
