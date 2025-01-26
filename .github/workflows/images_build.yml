@@ -52,7 +52,7 @@ env:
 jobs:
   init_build:
     name: Initialize build
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     outputs:
@@ -167,7 +167,7 @@ jobs:
       matrix:
         os: ${{ fromJson(needs.init_build.outputs.os) }}
 
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
@@ -286,7 +286,7 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@53851d14592bedcffcf25ea515637cff71ef929a # v3.3.0
         with:
-          image: tonistiigi/binfmt:latest
+          image: tonistiigi/binfmt:buildkit-master
           platforms: all
 
       - name: Set up Docker Buildx
@@ -454,7 +454,7 @@ jobs:
       matrix:
         build: ${{ fromJson(needs.init_build.outputs.database) }}
         os: ${{ fromJson(needs.init_build.outputs.os) }}
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
@@ -511,7 +511,7 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@53851d14592bedcffcf25ea515637cff71ef929a # v3.3.0
         with:
-          image: tonistiigi/binfmt:latest
+          image: tonistiigi/binfmt:buildkit-master
           platforms: all
 
       - name: Set up Docker Buildx
@@ -721,7 +721,7 @@ jobs:
         build: ${{ fromJson(needs.init_build.outputs.components) }}
         os: ${{ fromJson(needs.init_build.outputs.os) }}
 
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
@@ -872,7 +872,7 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@53851d14592bedcffcf25ea515637cff71ef929a # v3.3.0
         with:
-          image: tonistiigi/binfmt:latest
+          image: tonistiigi/binfmt:buildkit-master
           platforms: all
 
       - name: Set up Docker Buildx
