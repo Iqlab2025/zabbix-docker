@@ -52,7 +52,7 @@ env:
 jobs:
   init_build:
     name: Initialize build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     permissions:
       contents: read
     outputs:
@@ -167,7 +167,7 @@ jobs:
       matrix:
         os: ${{ fromJson(needs.init_build.outputs.os) }}
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     permissions:
       contents: read
       id-token: write
@@ -454,7 +454,7 @@ jobs:
       matrix:
         build: ${{ fromJson(needs.init_build.outputs.database) }}
         os: ${{ fromJson(needs.init_build.outputs.os) }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     permissions:
       contents: read
       id-token: write
@@ -721,7 +721,7 @@ jobs:
         build: ${{ fromJson(needs.init_build.outputs.components) }}
         os: ${{ fromJson(needs.init_build.outputs.os) }}
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     permissions:
       contents: read
       id-token: write
