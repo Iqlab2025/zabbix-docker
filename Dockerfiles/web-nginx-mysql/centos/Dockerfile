@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG OS_BASE_IMAGE=quay.io/centos/centos:stream9-minimal
+ARG OS_BASE_IMAGE=quay.io/centos/centos:stream10-minimal
 ARG MAJOR_VERSION=7.4
 ARG ZBX_VERSION=${MAJOR_VERSION}
 ARG BUILD_BASE_IMAGE=zabbix-build-mysql:centos-${ZBX_VERSION}
@@ -50,15 +50,9 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
             php-xml \
             findutils \
             glibc-locale-source \
+            gzip  \
             shadow-utils \
             supervisor" && \
-    microdnf -y module enable \
-        --disablerepo "*" \
-        --enablerepo "appstream" \
-        --setopt=install_weak_deps=0 \
-        --setopt=keepcache=0 \
-        php:8.2 \
-        nginx:1.24 && \
     microdnf -y install \
         --disablerepo "*" \
         --enablerepo "extras-common" \
@@ -66,6 +60,8 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
         --setopt=keepcache=0 \
         --best \
         --nodocs epel-release && \
+    sed -i 's/$releasever_major${releasever_minor:+.$releasever_minor}/$releasever/g' /etc/yum.repos.d/epel*.repo && \
+    sed -i 's/$releasever_major/$releasever/g' /etc/yum.repos.d/epel*.repo && \
     microdnf -y install \
         --disablerepo "*" \
         --enablerepo "baseos" \
@@ -105,6 +101,7 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
     cd ${ZABBIX_WWW_ROOT}/ && \
     rm -f conf/zabbix.conf.php conf/maintenance.inc.php conf/zabbix.conf.php.example && \
     rm -rf tests && \
+    gunzip /usr/share/i18n/charmaps/UTF-8.gz && \
     rm -f locale/add_new_language.sh locale/update_po.sh locale/make_mo.sh && \
     find ${ZABBIX_WWW_ROOT}/locale -name '*.po' | xargs rm -f && \
     find ${ZABBIX_WWW_ROOT}/locale -name '*.sh' | xargs rm -f && \
@@ -124,7 +121,8 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
     chmod -R g=u /var/lib/php/session/ && \
     microdnf -y remove \
             findutils \
-            glibc-locale-source
+            glibc-locale-source \
+            gzip
 
 HEALTHCHECK --interval=1m30s --timeout=3s --retries=3 --start-period=40s --start-interval=5s \
     CMD curl -f http://localhost:8080/ping || exit 1

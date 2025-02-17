@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG OS_BASE_IMAGE=quay.io/centos/centos:stream9-minimal
+ARG OS_BASE_IMAGE=quay.io/centos/centos:stream10-minimal
 ARG MAJOR_VERSION=7.4
 ARG ZBX_VERSION=${MAJOR_VERSION}
 ARG BUILD_BASE_IMAGE=zabbix-build-mysql:centos-${ZBX_VERSION}
@@ -43,7 +43,8 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
             iputils \
             pcre2 \
             libcurl-minimal \
-            libmodbus \
+#            libmodbus \
+            openldap \
             openssl-libs \
             shadow-utils \
             zlib" && \
@@ -54,6 +55,8 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
         --setopt=keepcache=0 \
         --best \
         --nodocs epel-release && \
+    sed -i 's/$releasever_major${releasever_minor:+.$releasever_minor}/$releasever/g' /etc/yum.repos.d/epel*.repo && \
+    sed -i 's/$releasever_major/$releasever/g' /etc/yum.repos.d/epel*.repo && \
     microdnf -y install \
         --disablerepo "*" \
         --enablerepo "baseos" \
