@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG OS_BASE_IMAGE=quay.io/centos/centos:stream10-minimal
+ARG OS_BASE_IMAGE=quay.io/centos/centos:stream9-minimal
 ARG MAJOR_VERSION=7.4
 ARG ZBX_VERSION=${MAJOR_VERSION}
 ARG BUILD_BASE_IMAGE=zabbix-build-mysql:centos-${ZBX_VERSION}
@@ -61,8 +61,8 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
             libpsl \
             libbrotli \
             libxml2 \
-            mysql8.4 \
-            mysql8.4-libs \
+            mysql \
+            mysql-libs \
             net-snmp-libs \
             OpenIPMI-libs \
             openldap \
@@ -80,8 +80,6 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
         --setopt=keepcache=0 \
         --best \
         --nodocs epel-release && \
-    sed -i 's/$releasever_major${releasever_minor:+.$releasever_minor}/$releasever/g' /etc/yum.repos.d/epel*.repo && \
-    sed -i 's/$releasever_major/$releasever/g' /etc/yum.repos.d/epel*.repo && \
     microdnf -y install \
         --disablerepo "*" \
         --enablerepo "baseos" \
@@ -100,7 +98,7 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
             --setopt=tsflags=nodocs \
         tzdata && \
     microdnf download libcurl && \
-    rpm -Uvh --nodeps --replacefiles "*curl*el10*.rpm" && \
+    rpm -Uvh --nodeps --replacefiles "*curl*$( uname -i ).rpm" && \
     microdnf remove -y libcurl-minimal && \
     rm -rf "*curl*$( uname -i ).rpm" && \
     groupadd \
