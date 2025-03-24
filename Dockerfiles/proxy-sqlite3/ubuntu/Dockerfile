@@ -52,6 +52,7 @@ RUN --mount=type=cache,target=/var/cache/apt/,sharing=locked \
             traceroute \
             nmap \
             iputils-ping \
+            krb5-user \
             ca-certificates \
             fping \
             openssl \
