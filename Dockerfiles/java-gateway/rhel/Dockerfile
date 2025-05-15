@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG OS_BASE_IMAGE=registry.access.redhat.com/ubi9/ubi-minimal:9.5
+ARG OS_BASE_IMAGE=registry.access.redhat.com/ubi10/ubi-minimal:10.0
 ARG MAJOR_VERSION=7.4
 ARG RELEASE=0
 ARG ZBX_VERSION=${MAJOR_VERSION}
@@ -56,12 +56,12 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
     INSTALL_PKGS="bash \
             findutils \
             shadow-utils \
-            java-17-openjdk-headless" && \
+            java-21-openjdk-headless" && \
     microdnf -y install \
             --disableplugin=subscription-manager \
             --disablerepo "*" \
-            --enablerepo "ubi-9-baseos-rpms" \
-            --enablerepo "ubi-9-appstream-rpms" \
+            --enablerepo "ubi-10-baseos-rpms" \
+            --enablerepo "ubi-10-appstream-rpms" \
             --setopt=install_weak_deps=0 \
             --setopt=keepcache=0 \
             --best \

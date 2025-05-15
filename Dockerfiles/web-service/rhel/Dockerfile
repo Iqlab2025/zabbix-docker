@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG OS_BASE_IMAGE=registry.access.redhat.com/ubi9/ubi-minimal:9.5
+ARG OS_BASE_IMAGE=registry.access.redhat.com/ubi10/ubi-minimal:10.0
 ARG MAJOR_VERSION=7.4
 ARG RELEASE=0
 ARG ZBX_VERSION=${MAJOR_VERSION}
@@ -7,7 +7,7 @@ ARG BUILD_BASE_IMAGE=zabbix-build-mysql:rhel-${ZBX_VERSION}
 
 FROM ${BUILD_BASE_IMAGE} AS builder
 
-ARG OS_BASE_IMAGE=registry.access.redhat.com/ubi9/ubi-minimal:9.5
+ARG OS_BASE_IMAGE=registry.access.redhat.com/ubi10/ubi-minimal:10.0
 FROM ${OS_BASE_IMAGE}
 
 ARG MAJOR_VERSION
@@ -60,15 +60,15 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
     INSTALL_PKGS="bash \
             shadow-utils \
             chromium-headless" && \
-    curl --tlsv1.2 -sSf -L https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm -o /tmp/epel-release-latest-9.noarch.rpm && \
-    rpm -ivh /tmp/epel-release-latest-9.noarch.rpm && \
-    rm -rf /tmp/epel-release-latest-9.noarch.rpm && \
+    curl --tlsv1.2 -sSf -L https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm -o /tmp/epel-release-latest-10.noarch.rpm && \
+    rpm -ivh /tmp/epel-release-latest-10.noarch.rpm && \
+    rm -rf /tmp/epel-release-latest-10.noarch.rpm && \
     ARCH_SUFFIX="$(arch)"; \
     microdnf -y install \
             --disablerepo "*" \
-            --enablerepo "ubi-9-baseos-rpms" \
-            --enablerepo "ubi-9-appstream-rpms" \
-            --enablerepo "rhel-9-for-$ARCH_SUFFIX-appstream-rpms" \
+            --enablerepo "ubi-10-baseos-rpms" \
+            --enablerepo "ubi-10-appstream-rpms" \
+            --enablerepo "rhel-10-for-$ARCH_SUFFIX-appstream-rpms" \
             --enablerepo "epel" \
             --setopt=install_weak_deps=0 \
             --setopt=keepcache=0 \
@@ -78,8 +78,8 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
     microdnf -y install \
             --disableplugin=subscription-manager \
             --disablerepo "*" \
-            --enablerepo "ubi-9-baseos-rpms" \
-            --enablerepo "ubi-9-appstream-rpms" \
+            --enablerepo "ubi-10-baseos-rpms" \
+            --enablerepo "ubi-10-appstream-rpms" \
             --setopt=install_weak_deps=0 \
             --setopt=keepcache=0 \
             --best \

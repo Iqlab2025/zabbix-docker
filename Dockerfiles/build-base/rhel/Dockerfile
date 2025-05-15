@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG OS_BASE_IMAGE=registry.access.redhat.com/ubi9/ubi-minimal:9.5
+ARG OS_BASE_IMAGE=registry.access.redhat.com/ubi10/ubi-minimal:10.0
 FROM ${OS_BASE_IMAGE}
 
 ARG MAJOR_VERSION=7.4
@@ -45,40 +45,34 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
             libcurl-devel \
             libevent-devel \
             libssh-devel \
-            libmodbus-devel \
+#            libmodbus-devel \
             libxml2-devel \
             openssl-devel \
             openldap-devel \
             make \
-            mysql-devel \
+            mysql8.4-devel \
             net-snmp-devel \
             OpenIPMI-devel \
             openldap-devel \
             sqlite-devel \
             postgresql-private-devel \
             postgresql-server-devel \
-            java-17-openjdk-devel \
+            java-21-openjdk-devel \
             git \
             gettext \
             unixODBC-devel \
             zlib-devel" && \
-    curl --tlsv1.2 -sSf -L https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm -o /tmp/epel-release-latest-9.noarch.rpm && \
-    rpm -ivh /tmp/epel-release-latest-9.noarch.rpm && \
-    rm -rf /tmp/epel-release-latest-9.noarch.rpm && \
+    curl --tlsv1.2 -sSf -L https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm -o /tmp/epel-release-latest-10.noarch.rpm && \
+    rpm -ivh /tmp/epel-release-latest-10.noarch.rpm && \
+    rm -rf /tmp/epel-release-latest-10.noarch.rpm && \
     ARCH_SUFFIX="$(arch)"; \
-    microdnf -y module enable \
-        --disablerepo "*" \
-        --enablerepo "rhel-9-for-$ARCH_SUFFIX-appstream-rpms" \
-        --setopt=install_weak_deps=0 \
-        --setopt=keepcache=0 \
-        postgresql:16 && \
     microdnf -y install \
             --disablerepo "*" \
-            --enablerepo "ubi-9-baseos-rpms" \
-            --enablerepo "ubi-9-appstream-rpms" \
-            --enablerepo "rhel-9-for-$ARCH_SUFFIX-baseos-rpms" \
-            --enablerepo "rhel-9-for-$ARCH_SUFFIX-appstream-rpms" \
-            --enablerepo "codeready-builder-for-rhel-9-$ARCH_SUFFIX-rpms" \
+            --enablerepo "ubi-10-baseos-rpms" \
+            --enablerepo "ubi-10-appstream-rpms" \
+            --enablerepo "rhel-10-for-$ARCH_SUFFIX-baseos-rpms" \
+            --enablerepo "rhel-10-for-$ARCH_SUFFIX-appstream-rpms" \
+            --enablerepo "codeready-builder-for-rhel-10-$ARCH_SUFFIX-rpms" \
             --enablerepo "epel" \
             --setopt=install_weak_deps=0 \
             --setopt=keepcache=0 \

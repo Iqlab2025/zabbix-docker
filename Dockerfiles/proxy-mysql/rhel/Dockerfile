@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG OS_BASE_IMAGE=registry.access.redhat.com/ubi9/ubi-minimal:9.5
+ARG OS_BASE_IMAGE=registry.access.redhat.com/ubi10/ubi-minimal:10.0
 ARG MAJOR_VERSION=7.4
 ARG RELEASE=0
 ARG ZBX_VERSION=${MAJOR_VERSION}
@@ -80,25 +80,25 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
             openssl \
             libssh \
             libxml2 \
-            mysql \
-            mysql-libs \
+            mysql8.4 \
+            mysql8.4-libs \
             net-snmp-agent-libs \
             OpenIPMI-libs \
             pcre2 \
             gzip \
             unixODBC \
             zlib" && \
-    curl --tlsv1.2 -sSf -L https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm -o /tmp/epel-release-latest-9.noarch.rpm && \
-    rpm -ivh /tmp/epel-release-latest-9.noarch.rpm && \
-    rm -rf /tmp/epel-release-latest-9.noarch.rpm && \
+    curl --tlsv1.2 -sSf -L https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm -o /tmp/epel-release-latest-10.noarch.rpm && \
+    rpm -ivh /tmp/epel-release-latest-10.noarch.rpm && \
+    rm -rf /tmp/epel-release-latest-10.noarch.rpm && \
     ARCH_SUFFIX="$(arch)"; \
     microdnf -y install \
             --disablerepo "*" \
-            --enablerepo "ubi-9-baseos-rpms" \
-            --enablerepo "ubi-9-appstream-rpms" \
-            --enablerepo "rhel-9-for-$ARCH_SUFFIX-baseos-rpms" \
-            --enablerepo "rhel-9-for-$ARCH_SUFFIX-appstream-rpms" \
-            --enablerepo "codeready-builder-for-rhel-9-$ARCH_SUFFIX-rpms" \
+            --enablerepo "ubi-10-baseos-rpms" \
+            --enablerepo "ubi-10-appstream-rpms" \
+            --enablerepo "rhel-10-for-$ARCH_SUFFIX-baseos-rpms" \
+            --enablerepo "rhel-10-for-$ARCH_SUFFIX-appstream-rpms" \
+            --enablerepo "codeready-builder-for-rhel-10-$ARCH_SUFFIX-rpms" \
             --enablerepo "epel" \
             --setopt=install_weak_deps=0 \
             --setopt=keepcache=0 \
@@ -108,19 +108,19 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
     microdnf -y update \
             --disableplugin=subscription-manager \
             --disablerepo "*" \
-            --enablerepo "ubi-9-baseos-rpms" \
+            --enablerepo "ubi-10-baseos-rpms" \
             --setopt=install_weak_deps=0 \
             --best \
             --setopt=tsflags=nodocs \
         tzdata && \
-    microdnf -y reinstall \
-            --disableplugin=subscription-manager \
-            --disablerepo "*" \
-            --enablerepo "ubi-9-baseos-rpms" \
-            --setopt=install_weak_deps=0 \
-            --best \
-            --setopt=tsflags=nodocs \
-        tzdata && \
+#    microdnf -y reinstall \
+#            --disableplugin=subscription-manager \
+#            --disablerepo "*" \
+#            --enablerepo "ubi-9-baseos-rpms" \
+#            --setopt=install_weak_deps=0 \
+#            --best \
+#            --setopt=tsflags=nodocs \
+#        tzdata && \
     groupadd \
             --system \
             --gid 1995 \

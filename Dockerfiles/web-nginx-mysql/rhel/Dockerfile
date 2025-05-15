@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG OS_BASE_IMAGE=registry.access.redhat.com/ubi9/ubi-minimal:9.5
+ARG OS_BASE_IMAGE=registry.access.redhat.com/ubi10/ubi-minimal:10.0
 ARG MAJOR_VERSION=7.4
 ARG RELEASE=0
 ARG ZBX_VERSION=${MAJOR_VERSION}
@@ -61,7 +61,8 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
             shadow-utils \
             findutils \
             glibc-locale-source \
-            mysql \
+            gzip \
+            mysql8.4 \
             nginx \
             php-bcmath \
             php-curl \
@@ -72,23 +73,16 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
             php-mbstring \
             php-mysqlnd \
             php-xml" && \
-    curl --tlsv1.2 -sSf -L https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm -o /tmp/epel-release-latest-9.noarch.rpm && \
-    rpm -ivh /tmp/epel-release-latest-9.noarch.rpm && \
-    rm -rf /tmp/epel-release-latest-9.noarch.rpm && \
+    curl --tlsv1.2 -sSf -L https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm -o /tmp/epel-release-latest-10.noarch.rpm && \
+    rpm -ivh /tmp/epel-release-latest-10.noarch.rpm && \
+    rm -rf /tmp/epel-release-latest-10.noarch.rpm && \
     ARCH_SUFFIX="$(arch)"; \
-    microdnf -y module enable \
-        --disablerepo "*" \
-        --enablerepo "rhel-9-for-$ARCH_SUFFIX-appstream-rpms" \
-        --setopt=install_weak_deps=0 \
-        --setopt=keepcache=0 \
-        php:8.2 \
-        nginx:1.24 && \
     microdnf -y install \
             --disablerepo "*" \
-            --enablerepo "ubi-9-baseos-rpms" \
-            --enablerepo "ubi-9-appstream-rpms" \
-            --enablerepo "rhel-9-for-$ARCH_SUFFIX-baseos-rpms" \
-            --enablerepo "rhel-9-for-$ARCH_SUFFIX-appstream-rpms" \
+            --enablerepo "ubi-10-baseos-rpms" \
+            --enablerepo "ubi-10-appstream-rpms" \
+            --enablerepo "rhel-10-for-$ARCH_SUFFIX-baseos-rpms" \
+            --enablerepo "rhel-10-for-$ARCH_SUFFIX-appstream-rpms" \
             --enablerepo "epel" \
             --setopt=install_weak_deps=0 \
             --setopt=keepcache=0 \
@@ -98,20 +92,20 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
     microdnf -y update \
             --disableplugin=subscription-manager \
             --disablerepo "*" \
-            --enablerepo "ubi-9-baseos-rpms" \
+            --enablerepo "ubi-10-baseos-rpms" \
             --setopt=install_weak_deps=0 \
             --best \
             --setopt=tsflags=nodocs \
         tzdata && \
-    microdnf -y reinstall \
-            --disableplugin=subscription-manager \
-            --disablerepo "*" \
-            --enablerepo "ubi-9-baseos-rpms" \
-            --setopt=install_weak_deps=0 \
-            --setopt=keepcache=0 \
-            --best \
-            --setopt=tsflags=nodocs \
-        tzdata && \
+#    microdnf -y reinstall \
+#            --disableplugin=subscription-manager \
+#            --disablerepo "*" \
+#            --enablerepo "ubi-9-baseos-rpms" \
+#            --setopt=install_weak_deps=0 \
+#            --setopt=keepcache=0 \
+#            --best \
+#            --setopt=tsflags=nodocs \
+#        tzdata && \
     groupadd \
             --system \
             --gid 1995 \
@@ -155,7 +149,8 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
     chmod -R g=u /var/lib/php/session/ && \
     microdnf -y remove \
             findutils \
-            glibc-locale-source
+            glibc-locale-source \
+            gzip
 
 HEALTHCHECK --interval=1m30s --timeout=3s --retries=3 --start-period=40s --start-interval=5s \
     CMD curl -f http://localhost:8080/ping || exit 1

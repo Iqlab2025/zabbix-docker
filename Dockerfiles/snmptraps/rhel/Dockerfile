@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG OS_BASE_IMAGE=registry.access.redhat.com/ubi9/ubi-minimal:9.5
+ARG OS_BASE_IMAGE=registry.access.redhat.com/ubi10/ubi-minimal:10.0
 FROM ${OS_BASE_IMAGE}
 
 ARG MAJOR_VERSION=7.4
@@ -56,8 +56,8 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
     microdnf -y install \
             --disableplugin=subscription-manager \
             --disablerepo="*" \
-            --enablerepo "ubi-9-baseos-rpms" \
-            --enablerepo "ubi-9-appstream-rpms" \
+            --enablerepo "ubi-10-baseos-rpms" \
+            --enablerepo "ubi-10-appstream-rpms" \
             --setopt=install_weak_deps=0 \
             --setopt=keepcache=0 \
             --best \
@@ -66,20 +66,20 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
     microdnf -y update \
             --disableplugin=subscription-manager \
             --disablerepo "*" \
-            --enablerepo "ubi-9-baseos-rpms" \
+            --enablerepo "ubi-10-baseos-rpms" \
             --setopt=install_weak_deps=0 \
             --best \
             --setopt=tsflags=nodocs \
         tzdata && \
-    microdnf -y reinstall \
-            --disableplugin=subscription-manager \
-            --disablerepo "*" \
-            --enablerepo "ubi-9-baseos-rpms" \
-            --setopt=install_weak_deps=0 \
-            --setopt=keepcache=0 \
-            --best \
-            --setopt=tsflags=nodocs \
-        tzdata && \
+#    microdnf -y reinstall \
+#            --disableplugin=subscription-manager \
+#            --disablerepo "*" \
+#            --enablerepo "ubi-9-baseos-rpms" \
+#            --setopt=install_weak_deps=0 \
+#            --setopt=keepcache=0 \
+#            --best \
+#            --setopt=tsflags=nodocs \
+#        tzdata && \
     groupadd \
             --system \
             --gid 1995 \
