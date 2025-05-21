@@ -51,6 +51,7 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
             php-xml \
             postgresql \
             shadow-utils \
+            gzip \
             supervisor" && \
     microdnf -y install \
         --disablerepo "*" \
@@ -117,7 +118,8 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
     chmod -R g=u /var/lib/php/session/ && \
     microdnf -y remove \
             findutils \
-            glibc-locale-source
+            glibc-locale-source \
+            gzip
 
 HEALTHCHECK --interval=1m30s --timeout=3s --retries=3 --start-period=40s --start-interval=5s \
     CMD curl -f http://localhost:8080/ping || exit 1
