@@ -29,14 +29,17 @@ LABEL org.opencontainers.image.title="Zabbix agent" `
       org.opencontainers.image.version="${ZBX_VERSION}" `
       org.opencontainers.image.source="${ZBX_SOURCES}"
 
-SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop';"]
+COPY --from=builder ["C:\\zabbix-${ZBX_VERSION}-output", "C:\\zabbix"]
+COPY --from=builder ["C:\\pwsh", "C:\\Program Files\\PowerShell"]
+COPY [".\\docker-entrypoint.ps1", "C:\\zabbix"]
 
 WORKDIR C:\zabbix\
 
-COPY --from=builder ["C:\\zabbix-${ZBX_VERSION}-output", "C:\\zabbix"]
-COPY [".\\docker-entrypoint.ps1", "C:\\zabbix"]
-
 USER ContainerAdministrator
+
+RUN setx /M PATH "%PATH%;C:\Program Files\PowerShell"
+
+SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop';"]
 
 RUN $env:PATH = [string]::Format('{0}\zabbix\sbin;{0}\zabbix\bin;', $env:SystemDrive) + $env:PATH; `
     [Environment]::SetEnvironmentVariable('PATH', $env:PATH, [EnvironmentVariableTarget]::Machine); `
