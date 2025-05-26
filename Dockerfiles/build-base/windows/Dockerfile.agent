@@ -125,7 +125,6 @@ RUN Set-Location -Path $env:SystemDrive\.; `
     Expand-Archive `
         -Path $env:TEMP\pwsh.zip `
         -DestinationPath $env:SystemDrive\pwsh\.; `
-    `
 	Get-ChildItem -Path $env:SystemDrive\pwsh -Directory | Where-Object { `
         $_.Name -match '^(cs|de|es|fr|it|ja|ko|pl|pt-BR|ru|tr|zh-Hans|zh-Hant)$' `
     } | Remove-Item -Recurse -Force; `
