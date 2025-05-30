@@ -53,6 +53,7 @@ RUN --mount=type=tmpfs,target=/var/lib/dnf/ \
             nmap \
             libssh \
             fping \
+            iputils \
             file-libs \
             libxml2 \
             net-snmp-libs \

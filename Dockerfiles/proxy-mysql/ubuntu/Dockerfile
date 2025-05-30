@@ -53,6 +53,7 @@ RUN --mount=type=cache,target=/var/cache/apt/,sharing=locked \
             tzdata \
             traceroute \
             nmap \
+            iputils-ping \
             ca-certificates \
             fping \
             openssl \
