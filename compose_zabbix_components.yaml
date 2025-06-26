@@ -316,6 +316,7 @@ services:
    - /etc/localtime:/etc/localtime:ro
    - ${DATA_DIRECTORY}/etc/ssl/apache2:/etc/ssl/apache2:ro
    - ${DATA_DIRECTORY}/usr/share/zabbix/modules/:/usr/share/zabbix/modules/:ro
+   - ${DATA_DIRECTORY}/var/lib/zabbix/enc:/var/lib/zabbix/enc:ro
   tmpfs:
    - /tmp
    - /var/lib/php/session:mode=770,uid=1997,gid=1995
@@ -409,6 +410,7 @@ services:
    - /etc/localtime:/etc/localtime:ro
    - ${DATA_DIRECTORY}/etc/ssl/nginx:/etc/ssl/nginx:ro
    - ${DATA_DIRECTORY}/usr/share/zabbix/modules/:/usr/share/zabbix/modules/:ro
+   - ${DATA_DIRECTORY}/var/lib/zabbix/enc:/var/lib/zabbix/enc:ro
   tmpfs:
    - /tmp
    - /var/lib/php/session:mode=770,uid=1997,gid=1995

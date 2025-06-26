@@ -15,6 +15,7 @@ ARG ZBX_SOURCES=https://git.zabbix.com/scm/zbx/zabbix.git
 ENV TERM=xterm \
     ZBX_VERSION=${ZBX_VERSION} ZBX_SOURCES=${ZBX_SOURCES} \
     ZABBIX_CONF_DIR="/etc/zabbix" \
+    ZABBIX_USER_HOME_DIR="/var/lib/zabbix" \
     ZABBIX_WWW_ROOT="/usr/share/zabbix"
 
 LABEL org.opencontainers.image.authors="Alexey Pustovalov <alexey.pustovalov@zabbix.com>" \
@@ -76,11 +77,13 @@ RUN set -eux && \
             --uid 1997 \
             --ingroup zabbix \
             --shell /sbin/nologin \
-            --home /var/lib/zabbix/ \
+            --home ${ZABBIX_USER_HOME_DIR} \
         zabbix && \
     mkdir -p ${ZABBIX_CONF_DIR} && \
     mkdir -p ${ZABBIX_CONF_DIR}/web && \
     mkdir -p ${ZABBIX_CONF_DIR}/web/certs && \
+    mkdir -p ${ZABBIX_USER_HOME_DIR}/enc && \
+    mkdir -p ${ZABBIX_USER_HOME_DIR}/enc_internal && \
     mkdir -p /var/lib/php/session && \
     rm -rf /etc/php84/php-fpm.d/www.conf && \
     rm -f /etc/nginx/http.d/*.conf && \
@@ -100,9 +103,9 @@ RUN set -eux && \
     chown --quiet -R zabbix:root /etc/nginx/ /etc/php84/php-fpm.d/ /etc/php84/php-fpm.conf && \
     chgrp -R 0 /etc/nginx/ /etc/php84/php-fpm.d/ /etc/php84/php-fpm.conf && \
     chmod -R g=u /etc/nginx/ /etc/php84/php-fpm.d/ /etc/php84/php-fpm.conf && \
-    chown --quiet -R zabbix:root /var/lib/php/session/ /var/lib/nginx/ && \
-    chgrp -R 0 /var/lib/php/session/ /var/lib/nginx/ && \
-    chmod -R g=u /var/lib/php/session/ /var/lib/nginx/
+    chown --quiet -R zabbix:root ${ZABBIX_USER_HOME_DIR}/ /var/lib/php/session/ /var/lib/nginx/ && \
+    chgrp -R 0 ${ZABBIX_USER_HOME_DIR}/ /var/lib/php/session/ /var/lib/nginx/ && \
+    chmod -R g=u ${ZABBIX_USER_HOME_DIR}/ /var/lib/php/session/ /var/lib/nginx/
 
 HEALTHCHECK --interval=1m30s --timeout=3s --retries=3 --start-period=40s --start-interval=5s \
     CMD curl -f http://localhost:8080/ping || exit 1

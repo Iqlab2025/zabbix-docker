@@ -242,6 +242,16 @@ ZBX_VAULTDBPATH= # Available since 5.2.0
 ZBX_VAULTURL=https://127.0.0.1:8200 # Available since 5.2.0
 VAULT_TOKEN= # Available since 5.2.0
 
+ZBX_SERVER_TLS_ACTIVE=false # Available since 7.4.0
+ZBX_SERVER_TLS_CAFILE= # Available since 7.4.0
+ZBX_SERVER_TLS_CA= # Available since 7.4.0
+ZBX_SERVER_TLS_KEYFILE= # Available since 7.4.0
+ZBX_SERVER_TLS_KEY= # Available since 7.4.0
+ZBX_SERVER_TLS_CERTFILE= # Available since 7.4.0
+ZBX_SERVER_TLS_CERT= # Available since 7.4.0
+ZBX_SERVER_TLS_CERT_ISSUER= # Available since 7.4.0
+ZBX_SERVER_TLS_CERT_SUBJECT= # Available since 7.4.0
+
 Allowed PHP-FPM configuration options:
 PHP_FPM_PM=dynamic
 PHP_FPM_PM_MAX_CHILDREN=50
@@ -262,6 +272,10 @@ Please follow official Nginx [documentation](http://nginx.org/en/docs/http/confi
 ### ``/etc/zabbix/web/certs``
 
 The volume allows to use custom certificates for SAML authentification. The volume must contains three files ``sp.key``, ``sp.crt`` and ``idp.crt``. Available since 5.0.0.
+
+### ``/var/lib/zabbix/enc``
+
+The volume is used to store TLS related files. These file names are specified using ``ZBX_SERVER_TLS_CAFILE``, ``ZBX_SERVER_TLS_KEYFILE`` and ``ZBX_SERVER_TLS_CERTFILE`` variables. Additionally it is possible to use environment variables ``ZBX_SERVER_TLS_CA``, ``ZBX_SERVER_TLS_KEY`` and ``ZBX_SERVER_TLS_CERT`` with plaintext values. Available since 7.4.0.
 
 # The image variants
 
