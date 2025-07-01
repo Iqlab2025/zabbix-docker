@@ -2,7 +2,7 @@
 ARG OS_BASE_IMAGE=registry.access.redhat.com/ubi10/ubi-minimal:10.0
 ARG MAJOR_VERSION=7.4
 ARG RELEASE=0
-ARG ZBX_VERSION=${MAJOR_VERSION}
+ARG ZBX_VERSION=${MAJOR_VERSION}.0
 ARG BUILD_BASE_IMAGE=zabbix-build-pgsql:rhel-${ZBX_VERSION}
 
 FROM ${BUILD_BASE_IMAGE} AS builder
@@ -23,9 +23,9 @@ ENV TERM=xterm \
 
 LABEL description="Zabbix web-interface based on Nginx web server with PostgreSQL database support" \
       maintainer="alexey.pustovalov@zabbix.com" \
-      name="zabbix/zabbix-web-pgsql" \
+      name="zabbix/zabbix-web-pgsql-74" \
       release="${RELEASE}" \
-      run="docker run --name zabbix-web-nginx --link postgresql:pgsql-server --link zabbix-server:zabbix-server -p 80:80 -d registry.connect.redhat.com/zabbix/zabbix-web-pgsql-trunk:${ZBX_VERSION}" \
+      run="docker run --name zabbix-web-nginx --link postgresql:pgsql-server --link zabbix-server:zabbix-server -p 80:80 -d registry.connect.redhat.com/zabbix/zabbix-web-pgsql-74-74:${ZBX_VERSION}" \
       summary="Zabbix web-interface based on Nginx web server with PostgreSQL database support" \
       url="https://www.zabbix.com/" \
       vendor="Zabbix SIA" \
@@ -36,9 +36,9 @@ LABEL description="Zabbix web-interface based on Nginx web server with PostgreSQ
       io.openshift.tags="zabbix,zabbix-web,pgsql,nginx" \
       org.label-schema.build-date="${BUILD_DATE}" \
       org.label-schema.description="Zabbix web-interface based on Nginx web server with PostgreSQL database support" \
-      org.label-schema.docker.cmd="docker run --name zabbix-web-nginx --link postgresql:pgsql-server --link zabbix-server:zabbix-server -p 80:80 -d registry.connect.redhat.com/zabbix/zabbix-web-pgsql-trunk:${ZBX_VERSION}" \
+      org.label-schema.docker.cmd="docker run --name zabbix-web-nginx --link postgresql:pgsql-server --link zabbix-server:zabbix-server -p 80:80 -d registry.connect.redhat.com/zabbix/zabbix-web-pgsql-74-74:${ZBX_VERSION}" \
       org.label-schema.license="AGPL v3.0" \
-      org.label-schema.name="zabbix-web-pgsql-rhel" \
+      org.label-schema.name="zabbix-web-pgsql-74-rhel" \
       org.label-schema.schema-version="1.0" \
       org.label-schema.url="https://zabbix.com/" \
       org.label-schema.usage="https://www.zabbix.com/documentation/${MAJOR_VERSION}/manual/installation/containers" \

@@ -14,7 +14,7 @@ Zabbix build base image is prepared build environment for building Zabbix compon
 
 # Zabbix build base images
 
-These are the only official Zabbix build base Docker images. They are based on Alpine Linux v3.21, Ubuntu 24.04 (noble), CentOS Stream 9 and Oracle Linux 9 images. The available versions of the image are:
+These are the only official Zabbix build base Docker images. They are based on Alpine Linux v3.22, Ubuntu 24.04 (noble), CentOS Stream 9 and Oracle Linux 9 images. The available versions of the image are:
 
     Zabbix build base 5.0 (tags: alpine-5.0-latest, ubuntu-5.0-latest, ol-5.0-latest)
     Zabbix build base 5.0.* (tags: alpine-5.0.*, ubuntu-5.0.*, ol-5.0.*)
@@ -30,7 +30,7 @@ Images are updated when new releases are published. The image with ``latest`` ta
 
 # How to use this image
 
-The image is required to build Zabbix components. It is base image for [MySQL](https://github.com/zabbix/zabbix-docker/tree/trunk/Dockerfiles/build-mysql), [PostgreSQL](https://github.com/zabbix/zabbix-docker/tree/trunk/Dockerfiles/build-pgsql) and [SQLite3](https://github.com/zabbix/zabbix-docker/tree/trunk/Dockerfiles/build-sqlite3) base images. While the image contains only required packages, MySQL, PostgreSQL and SQLite3 base images compile Zabbix component and prepare them for usage.
+The image is required to build Zabbix components. It is base image for [MySQL](https://github.com/zabbix/zabbix-docker/tree/7.4/Dockerfiles/build-mysql), [PostgreSQL](https://github.com/zabbix/zabbix-docker/tree/7.4/Dockerfiles/build-pgsql) and [SQLite3](https://github.com/zabbix/zabbix-docker/tree/7.4/Dockerfiles/build-sqlite3) base images. While the image contains only required packages, MySQL, PostgreSQL and SQLite3 base images compile Zabbix component and prepare them for usage.
 
 # The image variants
 
@@ -64,7 +64,7 @@ Please see [the Docker installation documentation](https://docs.docker.com/insta
 
 ## Documentation
 
-Documentation for this image is stored in the [`build-base/` directory](https://github.com/zabbix/zabbix-docker/tree/trunk/Dockerfiles/build-base) of the [`zabbix/zabbix-docker` GitHub repo](https://github.com/zabbix/zabbix-docker/). Be sure to familiarize yourself with the [repository's `README.md` file](https://github.com/zabbix/zabbix-docker/blob/master/README.md) before attempting a pull request.
+Documentation for this image is stored in the [`build-base/` directory](https://github.com/zabbix/zabbix-docker/tree/7.4/Dockerfiles/build-base) of the [`zabbix/zabbix-docker` GitHub repo](https://github.com/zabbix/zabbix-docker/). Be sure to familiarize yourself with the [repository's `README.md` file](https://github.com/zabbix/zabbix-docker/blob/master/README.md) before attempting a pull request.
 
 ## Issues
 
