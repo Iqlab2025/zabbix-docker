@@ -14,7 +14,7 @@ Zabbix web service for performing various tasks using headless web browser (for 
 
 # Zabbix web service images
 
-These are the only official Zabbix web service Docker images. They are based on Alpine Linux v3.21, Ubuntu 24.04 (noble) and Oracle Linux 9 images. The available versions of Zabbix web service are:
+These are the only official Zabbix web service Docker images. They are based on Alpine Linux v3.22, Ubuntu 24.04 (noble) and Oracle Linux 9 images. The available versions of Zabbix web service are:
 
     Zabbix web service 6.0 (tags: alpine-6.0-latest, ubuntu-6.0-latest, ol-6.0-latest)
     Zabbix web service 6.0.* (tags: alpine-6.0.*, ubuntu-6.0.*, ol-6.0.*)
@@ -141,7 +141,7 @@ Please see [the Docker installation documentation](https://docs.docker.com/insta
 
 ## Documentation
 
-Documentation for this image is stored in the [`web-service/` directory](https://github.com/zabbix/zabbix-docker/tree/trunk/Dockerfiles/web-service) of the [`zabbix/zabbix-docker` GitHub repo](https://github.com/zabbix/zabbix-docker/). Be sure to familiarize yourself with the [repository's `README.md` file](https://github.com/zabbix/zabbix-docker/blob/trunk/README.md) before attempting a pull request.
+Documentation for this image is stored in the [`web-service/` directory](https://github.com/zabbix/zabbix-docker/tree/7.4/Dockerfiles/web-service) of the [`zabbix/zabbix-docker` GitHub repo](https://github.com/zabbix/zabbix-docker/). Be sure to familiarize yourself with the [repository's `README.md` file](https://github.com/zabbix/zabbix-docker/blob/7.4/README.md) before attempting a pull request.
 
 ## Issues
 
