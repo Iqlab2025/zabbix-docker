@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 ARG MAJOR_VERSION=7.4
 ARG RELEASE=0
-ARG ZBX_VERSION=${MAJOR_VERSION}
+ARG ZBX_VERSION=${MAJOR_VERSION}.0
 ARG BUILD_BASE_IMAGE=zabbix-build-base:rhel-${ZBX_VERSION}
 
 FROM ${BUILD_BASE_IMAGE} AS builder
@@ -10,14 +10,14 @@ ARG MAJOR_VERSION
 ARG RELEASE
 ARG ZBX_VERSION
 ARG ZBX_SOURCES=https://git.zabbix.com/scm/zbx/zabbix.git
-ARG GIT_BRANCH=master
+ARG GIT_BRANCH
 
 ARG ZBX_PLUGINS_VERSION=${GIT_BRANCH:-$ZBX_VERSION}
 ARG CFLAGS
 
 LABEL description="Zabbix build base for PostgreSQL based images" \
       maintainer="alexey.pustovalov@zabbix.com" \
-      name="zabbix/zabbix-build-pgsql-trunk" \
+      name="zabbix/zabbix-build-pgsql-74" \
       release="${RELEASE}" \
       summary="Zabbix build base (PostgreSQL)" \
       url="https://www.zabbix.com/" \

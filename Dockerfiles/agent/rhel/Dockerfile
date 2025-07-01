@@ -2,7 +2,7 @@
 ARG OS_BASE_IMAGE=registry.access.redhat.com/ubi10/ubi-minimal:10.0
 ARG MAJOR_VERSION=7.4
 ARG RELEASE=0
-ARG ZBX_VERSION=${MAJOR_VERSION}
+ARG ZBX_VERSION=${MAJOR_VERSION}.0
 ARG BUILD_BASE_IMAGE=zabbix-build-mysql:rhel-${ZBX_VERSION}
 
 FROM ${BUILD_BASE_IMAGE} AS builder
@@ -24,9 +24,9 @@ ENV ZBX_LOADMODULEPATH="${ZABBIX_USER_HOME_DIR}/modules" \
 
 LABEL description="Zabbix agent is deployed on a monitoring target to actively monitor local resources and applications" \
       maintainer="alexey.pustovalov@zabbix.com" \
-      name="zabbix/zabbix-agent-trunk" \
+      name="zabbix/zabbix-agent-74" \
       release="${RELEASE}" \
-      run="podman run --name zabbix-agent -p 10050:10050 -d registry.connect.redhat.com/zabbix/zabbix-agent-trunk:${ZBX_VERSION}" \
+      run="podman run --name zabbix-agent -p 10050:10050 -d registry.connect.redhat.com/zabbix/zabbix-agent-74:${ZBX_VERSION}" \
       summary="Zabbix agent" \
       url="https://www.zabbix.com/" \
       vendor="Zabbix SIA" \
@@ -37,7 +37,7 @@ LABEL description="Zabbix agent is deployed on a monitoring target to actively m
       io.openshift.tags="zabbix,zabbix-agent" \
       org.label-schema.build-date="${BUILD_DATE}" \
       org.label-schema.description="Zabbix agent is deployed on a monitoring target to actively monitor local resources and applications" \
-      org.label-schema.docker.cmd="podman run --name zabbix-agent -p 10050:10050 -d registry.connect.redhat.com/zabbix/zabbix-agent-trunk:${ZBX_VERSION}" \
+      org.label-schema.docker.cmd="podman run --name zabbix-agent -p 10050:10050 -d registry.connect.redhat.com/zabbix/zabbix-agent-74:${ZBX_VERSION}" \
       org.label-schema.license="AGPL v3.0" \
       org.label-schema.name="zabbix-agent-rhel" \
       org.label-schema.schema-version="1.0" \

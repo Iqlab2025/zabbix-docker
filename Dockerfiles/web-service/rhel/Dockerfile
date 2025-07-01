@@ -2,7 +2,7 @@
 ARG OS_BASE_IMAGE=registry.access.redhat.com/ubi10/ubi-minimal:10.0
 ARG MAJOR_VERSION=7.4
 ARG RELEASE=0
-ARG ZBX_VERSION=${MAJOR_VERSION}
+ARG ZBX_VERSION=${MAJOR_VERSION}.0
 ARG BUILD_BASE_IMAGE=zabbix-build-mysql:rhel-${ZBX_VERSION}
 
 FROM ${BUILD_BASE_IMAGE} AS builder
@@ -23,9 +23,9 @@ ENV TERM=xterm \
 
 LABEL description="Zabbix web service for performing various tasks using headless web browser" \
       maintainer="alexey.pustovalov@zabbix.com" \
-      name="zabbix/zabbix-web-service-trunk" \
+      name="zabbix/zabbix-web-service-74" \
       release="${RELEASE}" \
-      run="docker run --name zabbix-web-service --link zabbix-server:zabbix-server -p 10053:10053 -d registry.connect.redhat.com/zabbix/zabbix-web-service-trunk:${ZBX_VERSION}" \
+      run="docker run --name zabbix-web-service --link zabbix-server:zabbix-server -p 10053:10053 -d registry.connect.redhat.com/zabbix/zabbix-web-service-74:${ZBX_VERSION}" \
       summary="Zabbix web service" \
       url="https://www.zabbix.com/" \
       vendor="Zabbix SIA" \
@@ -36,7 +36,7 @@ LABEL description="Zabbix web service for performing various tasks using headles
       io.openshift.tags="zabbix,zabbix-web-service" \
       org.label-schema.build-date="${BUILD_DATE}" \
       org.label-schema.description="Zabbix web service for performing various tasks using headless web browser" \
-      org.label-schema.docker.cmd="docker run --name zabbix-web-service --link zabbix-server:zabbix-server -p 10053:10053 -d registry.connect.redhat.com/zabbix/zabbix-web-service-trunk:${ZBX_VERSION}" \
+      org.label-schema.docker.cmd="docker run --name zabbix-web-service --link zabbix-server:zabbix-server -p 10053:10053 -d registry.connect.redhat.com/zabbix/zabbix-web-service-74:${ZBX_VERSION}" \
       org.label-schema.license="AGPL v3.0" \
       org.label-schema.name="zabbix-web-service-rhel" \
       org.label-schema.schema-version="1.0" \

@@ -2,7 +2,7 @@
 ARG OS_BASE_IMAGE=registry.access.redhat.com/ubi10/ubi-minimal:10.0
 ARG MAJOR_VERSION=7.4
 ARG RELEASE=0
-ARG ZBX_VERSION=${MAJOR_VERSION}
+ARG ZBX_VERSION=${MAJOR_VERSION}.0
 ARG BUILD_BASE_IMAGE=zabbix-build-sqlite3:rhel-${ZBX_VERSION}
 
 FROM ${BUILD_BASE_IMAGE} AS builder
@@ -31,9 +31,9 @@ ENV ZBX_FPINGLOCATION="/usr/sbin/fping" \
 
 LABEL description="Zabbix proxy with SQLite3 database support" \
       maintainer="alexey.pustovalov@zabbix.com" \
-      name="zabbix/zabbix-proxy-sqlite-trunk" \
+      name="zabbix/zabbix-proxy-sqlite-74" \
       release="${RELEASE}" \
-      run="docker run --name zabbix-proxy -p 10051:10051 -d registry.connect.redhat.com/zabbix/zabbix-proxy-sqlite-trunk:${ZBX_VERSION}" \
+      run="docker run --name zabbix-proxy -p 10051:10051 -d registry.connect.redhat.com/zabbix/zabbix-proxy-sqlite-74:${ZBX_VERSION}" \
       summary="Zabbix proxy (SQLite3)" \
       url="https://www.zabbix.com/" \
       vendor="Zabbix SIA" \
@@ -44,7 +44,7 @@ LABEL description="Zabbix proxy with SQLite3 database support" \
       io.openshift.tags="zabbix,zabbix-proxy,sqlite" \
       org.label-schema.build-date="${BUILD_DATE}" \
       org.label-schema.description="Zabbix proxy with SQLite3 database support" \
-      org.label-schema.docker.cmd="docker run --name zabbix-proxy -p 10051:10051 -d registry.connect.redhat.com/zabbix/zabbix-proxy-sqlite3-trunk:${ZBX_VERSION}" \
+      org.label-schema.docker.cmd="docker run --name zabbix-proxy -p 10051:10051 -d registry.connect.redhat.com/zabbix/zabbix-proxy-sqlite3-74:${ZBX_VERSION}" \
       org.label-schema.license="AGPL v3.0" \
       org.label-schema.name="zabbix-proxy-sqlite-rhel" \
       org.label-schema.schema-version="1.0" \
