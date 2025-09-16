@@ -1,4 +1,4 @@
-FROM zabbix/zabbix-web-apache-mysql:alpine-6.0-latest
+FROM zabbix/zabbix-web-apache-mysql:alpine-7.4-latest
 
 # Replace Zabbix logos with your custom ones
 COPY ./custom/logo.svg /usr/share/zabbix/assets/img/logo.svg
